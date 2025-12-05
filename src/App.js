@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Calculator, Leaf, Car, Utensils, Building, TrendingDown, FileText, Copy, Mail, MapPin, Download, Search, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Calculator, Leaf, Car, Utensils, Building, FileText, Copy, Mail, Download, Search, ChevronDown, ChevronUp, Info } from 'lucide-react';
 
 const App = () => {
   const [eventData, setEventData] = useState({
@@ -63,7 +63,7 @@ const App = () => {
     materials: { standard: 8, reduced: 5, digital: 1 }
   };
 
-  const getCurrentVenue = () => {
+  const getCurrentVenue = useCallback(() => {
     if (eventData.venue === 'custom') {
       const typeMultipliers = { small: 0.5, medium: 0.9, large: 1.4 };
       const certDiscount = eventData.customVenue.hasCertification ? 0.7 : 1;
@@ -79,7 +79,7 @@ const App = () => {
       if (venue) return venue;
     }
     return venues.strong[0];
-  };
+  }, [eventData.venue, eventData.customVenue]);
 
   const calculations = useMemo(() => {
     const inPerson = eventData.attendees;
@@ -125,7 +125,7 @@ const App = () => {
       total,
       inPerson
     };
-  }, [eventData]);
+  }, [eventData, getCurrentVenue, emissionFactors, costEstimates, venues]);
 
   const loadTemplate = (t) => {
     setEventData(prev => ({
@@ -221,7 +221,7 @@ Calculator: sustainability.lincolnshirechamber.co.uk`;
       );
     });
     return filtered;
-  }, [venueSearch]);
+  }, [venueSearch, venues]);
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
