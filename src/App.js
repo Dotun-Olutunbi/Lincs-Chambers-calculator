@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Calculator, Leaf, Utensils, Building, Mail, Download, Search, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { Calculator, Leaf, Car, Utensils, Building, FileText, Copy, Mail, Download, Search, ChevronDown, ChevronUp, Info } from 'lucide-react';
 
 const App = () => {
   const [eventData, setEventData] = useState({
